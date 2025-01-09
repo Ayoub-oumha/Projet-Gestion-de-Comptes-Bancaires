@@ -1,8 +1,4 @@
-<?php
-include_once "../../config/classes/dbconection.php" ;
-$database = new Database2( "bank", "root" , "" ) ;
-// var_dump($database->connect()) ;
- ?>
+<?php echo 'hi' ; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

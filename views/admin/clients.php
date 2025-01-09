@@ -1,3 +1,11 @@
+<?php
+// include_once "../../controllers/AdminController.php";
+
+
+
+// $admin -> ajouterCompte();
+// $usersData = $admin -> showAllUsers();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -5,8 +13,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - Gestion des Clients</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <script src="../../public//assets//style/tailwind.js"></script>
+
 </head>
 
 <body class="bg-gray-100">
@@ -175,15 +186,15 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="p-3">
                                         <div class="flex items-center">
-                                            <img src="/api/placeholder/40/40" alt="Thomas Robert" class="w-10 h-10 rounded-full">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQJ2sZUUc6xap9g__-HYUVi9LA2MnfG8_7xF33YejfCkudFpb2voAVKP3K2kg9RBHVo4gFx5saiDaNNzxhhMLjPg" alt="Thomas Robert" class="w-10 h-10 rounded-full">
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Thomas Robert</div>
+                                                <div class="text-sm font-medium text-gray-900">ayoub oumha</div>
                                                 <div class="text-sm text-gray-500">ID: #45789</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="p-3">
-                                        <div class="text-sm text-gray-900">thomas@email.com</div>
+                                        <div class="text-sm text-gray-900">Ayoub@email.com</div>
                                         <div class="text-sm text-gray-500">06 12 34 56 78</div>
                                     </td>
                                     <td class="p-3">
@@ -196,8 +207,8 @@
                                         </span>
                                     </td>
                                     <td class="p-3">
-                                        <div class="text-sm text-gray-900">Il y a 2 heures</div>
-                                        <div class="text-sm text-gray-500">Virement sortant</div>
+                                        <div class="text-sm text-gray-900"></div>
+                                        <div class="text-sm text-gray-500"></div>
                                     </td>
                                     <td class="p-3">
                                         <div class="flex space-x-2">
@@ -215,47 +226,7 @@
                                 </tr>
 
                                 <!-- Client 2 -->
-                                <tr class="hover:bg-gray-50">
-                                    <td class="p-3">
-                                        <div class="flex items-center">
-                                            <img src="/api/placeholder/40/40" alt="Marie Dubois" class="w-10 h-10 rounded-full">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Marie Dubois</div>
-                                                <div class="text-sm text-gray-500">ID: #45790</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900">marie@email.com</div>
-                                        <div class="text-sm text-gray-500">06 98 76 54 32</div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900">1 compte</div>
-                                        <div class="text-sm text-gray-500">Courant</div>
-                                    </td>
-                                    <td class="p-3">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            En attente
-                                        </span>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900">Hier</div>
-                                        <div class="text-sm text-gray-500">Création compte</div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-900">
-                                                <i data-lucide="eye" class="w-5 h-5"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-900">
-                                                <i data-lucide="edit" class="w-5 h-5"></i>
-                                            </button>
-                                            <button class="text-green-600 hover:text-green-900">
-                                                <i data-lucide="check-circle" class="w-5 h-5"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
 
@@ -274,7 +245,9 @@
 
                                     <!-- Modal Body -->
                                     <div class="p-6">
-                                        <form id="addClientForm" class="space-y-6">
+                                        
+                                        <form id="addClientForm" method="POST" enctype="multipart/form-data" action="../../controllers//add_client_handler.php" class="space-y-6">
+
                                             <!-- Name -->
                                             <div>
                                                 <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
@@ -323,24 +296,36 @@
                                                 </select>
                                             </div>
 
-
-
+                                            <!-- account -->
+                                            <h3 class="text-xl font-bold mb-6">Create New Account</h3>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Account Type</label>
+                                                <select name="accType" required class="mt-1 block w-full border p-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                                    <option value="epargne">Savings Account</option>
+                                                    <option value="courant">Current Account</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Initial Balance ($)</label>
+                                                <input name="balance" type="number" min="0" step="0.1" required class="mt-1 p-1 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            </div>
+                                            <div class="flex justify-end space-x-3 p-6 border-t bg-gray-50">
+                                                <button
+                                                    onclick="toggleAddClientModal()" 
+                                                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                                    Annuler
+                                                </button>
+                                                <button
+                                                    onclick="submitAddClientForm()" type="submit"
+                                                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                    Créer le compte
+                                                </button>
+                                            </div>
                                         </form>
                                     </div>
 
                                     <!-- Modal Footer -->
-                                    <div class="flex justify-end space-x-3 p-6 border-t bg-gray-50">
-                                        <button
-                                            onclick="toggleAddClientModal()"
-                                            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                            Annuler
-                                        </button>
-                                        <button
-                                            onclick="submitAddClientForm()"
-                                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            Créer le compte
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
