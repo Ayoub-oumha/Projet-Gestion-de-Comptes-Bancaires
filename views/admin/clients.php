@@ -1,10 +1,17 @@
 <?php
-// include_once "../../controllers/AdminController.php";
+require_once '../../config/class_admin/dbconection.php';
+require_once '../../models/admin.php';
 
 
+// Initialiser la connexion et le modèle
+$database = new Database();
+$db = $database->connect();
+$adminModel = new adminModel($db);
 
-// $admin -> ajouterCompte();
-// $usersData = $admin -> showAllUsers();
+// Récupérer tous les utilisateurs
+$users = $adminModel->showAllUsers();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,7 +23,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script> -->
 
-    <script src="../../public//assets//style/tailwind.js"></script>
+    <script src="../../public//assets/style/tailwind.js"></script>
 
 </head>
 
@@ -177,55 +184,63 @@
                                     <th class="p-3">Contact</th>
                                     <th class="p-3">Comptes</th>
                                     <th class="p-3">Statut</th>
-                                    <th class="p-3">Dernière activité</th>
+                                 
                                     <th class="p-3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
-                                <!-- Client 1 -->
-                                <tr class="hover:bg-gray-50">
-                                    <td class="p-3">
-                                        <div class="flex items-center">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQJ2sZUUc6xap9g__-HYUVi9LA2MnfG8_7xF33YejfCkudFpb2voAVKP3K2kg9RBHVo4gFx5saiDaNNzxhhMLjPg" alt="Thomas Robert" class="w-10 h-10 rounded-full">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">ayoub oumha</div>
-                                                <div class="text-sm text-gray-500">ID: #45789</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900">Ayoub@email.com</div>
-                                        <div class="text-sm text-gray-500">06 12 34 56 78</div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900">2 comptes</div>
-                                        <div class="text-sm text-gray-500">Courant, Épargne</div>
-                                    </td>
-                                    <td class="p-3">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            Actif
-                                        </span>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="text-sm text-gray-900"></div>
-                                        <div class="text-sm text-gray-500"></div>
-                                    </td>
-                                    <td class="p-3">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-900">
-                                                <i data-lucide="eye" class="w-5 h-5"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-900">
-                                                <i data-lucide="edit" class="w-5 h-5"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-900">
-                                                <i data-lucide="lock" class="w-5 h-5"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Client 2 -->
+                                <!-- Client -->
+                                
+                                <?php foreach($users as $user) { ?>
+<tr class="hover:bg-gray-50">
+    <td class="p-3">
+        <div class="flex items-center">
+            <!-- Dynamically set the profile picture -->
+            <img src="data:image/jpeg;base64,<?=  base64_encode($user['profile_pic'])  ?>" alt="<?= htmlspecialchars($user['name']) ?>" class="w-10 h-10 rounded-full">
+            <div class="ml-4">
+                <!-- Display user's name and ID -->
+                <div class="text-sm font-medium text-gray-900"><?= htmlspecialchars($user['name']) ?></div>
+                <div class="text-sm text-gray-500">ID: #<?= htmlspecialchars($user['id']) ?></div>
+            </div>
+        </div>
+    </td>
+    <td class="p-3">
+        <!-- Display user's email -->
+        <div class="text-sm text-gray-900"><?= htmlspecialchars($user['email']) ?></div>
+    </td>
+    <td class="p-3">
+        <!-- Placeholder for account details -->
+        <div class="text-sm text-gray-900"><?= htmlspecialchars($user['role']) ?></div>
+        <div class="text-sm text-gray-500"><?= htmlspecialchars($user['status']) ?></div>
+    </td>
+    <td class="p-3">
+        <!-- Display status with conditional styling -->
+        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+            <?= $user['status'] === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+            <?= htmlspecialchars(ucfirst($user['status'])) ?>
+        </span>
+    </td>
+    <td class="p-3">
+        <!-- Placeholder for additional user data -->
+        <div class="text-sm text-gray-900"><?= htmlspecialchars($user['created_at']) ?></div>
+        <div class="text-sm text-gray-500">Updated: <?= htmlspecialchars($user['updated_at']) ?></div>
+    </td>
+    <td class="p-3">
+        <!-- Action buttons -->
+        <div class="flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-900">
+                <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+            <button class="text-gray-600 hover:text-gray-900">
+                <i data-lucide="edit" class="w-5 h-5"></i>
+            </button>
+            <button class="text-red-600 hover:text-red-900">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </td>
+</tr>
+<?php } ?>
 
                             </tbody>
                         </table>
